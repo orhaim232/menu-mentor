@@ -8,7 +8,8 @@
 
 ## שלב 1: נתונים בסיסיים (Data Core MVP)
 
-### משימה 1: הגדרת טבלאות ליבה וסכמה בסיסית
+### [x] משימה 1: הגדרת טבלאות ליבה וסכמה בסיסית
+**Completed: restaurants and menu_items were created in Supabase with one test restaurant and two mock menu items.**
 1. **מטרה:** יצירת מבנה הטבלאות הבסיסי למסעדה ולתפריטים.
 2. **אזורים רלוונטיים:** Supabase Dashboard / `supabase/migrations`.
 3. **זמן משוער:** 20 דקות.
