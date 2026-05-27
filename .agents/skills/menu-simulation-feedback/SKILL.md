@@ -103,6 +103,39 @@ The AI customer may ask realistic restaurant questions, but the system must eval
 
 ---
 
+## Development Stage Rule
+
+The skill supports two development stages:
+
+### MVP / Prototype Mode
+
+Use this mode only for early text-based feedback testing, mock simulations, or planning tasks.
+
+In MVP / Prototype Mode:
+
+* Do not block the task only because Auth, restaurant_id, menu_items table, or practice_attempts table are not implemented yet.
+* It is allowed to test the feedback logic with mock menu context supplied directly in the prompt.
+* It is allowed to generate sample SimulationFeedback JSON without saving it to the database.
+* It is allowed to test feedback quality without a UI, without Supabase, and without a real API route.
+* Missing production requirements must be marked clearly as TODO.
+* Do not invent menu facts. Even in mock mode, use only the menu facts provided in the test prompt.
+* Do not present mock behavior as production-ready behavior.
+
+### Production Mode
+
+Use this mode when implementing the real /api/chat route, real /practice UI, real database integration, or deployable product behavior.
+
+In Production Mode:
+
+* Auth is required.
+* restaurant_id is required.
+* Menu data must be scoped to the current restaurant.
+* LLM output must be validated against the SimulationFeedback contract.
+* Valid feedback should be stored as a practice attempt.
+* PII, JWTs, auth tokens, and secret keys must never be sent to the LLM.
+
+---
+
 ## Canonical Route
 
 Use this route for simulation feedback:
@@ -452,6 +485,14 @@ Rules:
 
 ---
 
+## Feedback Style Rule
+
+User-facing feedback should be firm but supportive.
+When the waiter makes a serious allergen or safety mistake, clearly explain the risk, but avoid shaming language.
+Prefer wording such as "חשוב לשים לב..." or "במקרה של אלרגנים צריך להיזהר..." instead of blaming phrases like "טעות חמורה מאוד!".
+
+---
+
 ## Prompt Requirements
 
 The simulation prompt must include:
@@ -679,8 +720,8 @@ Stop and ask for clarification if:
 1. `.agents/rules/code-structure-guide.md` is missing
 2. the task is not related to simulation feedback
 3. the task requires modifying forbidden folders
-4. there is no reliable `restaurant_id`
-5. the database has no way to store practice attempts
+4. the task is a Production implementation and there is no reliable `restaurant_id`
+5. the task is a Production implementation and the database has no way to store practice attempts
 6. strict JSON and raw token streaming are both required without validation
 7. the implementation would expose PII or JWT data to the LLM
 8. the user asks to implement menu upload/parsing inside this skill
