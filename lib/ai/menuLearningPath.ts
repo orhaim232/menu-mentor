@@ -6,20 +6,41 @@ import {
 } from '../db/mockData';
 
 export function generateFallbackMenuLearningPathV2(): MenuLearningPathV2 {
-  // Build dishes using mock data
+  // Build dishes using mock data with improved practical training content
   const dishes = MOCK_MENU_ITEMS.slice(0, 3).map(item => {
     const ingredients = getMockIngredientsByMenuItemId(item.id).map(ing => ing.name);
     const allergens = getMockAllergensByMenuItemId(item.id).map(all => all.name);
     
+    let memoryTip = '';
+    let familiarAssociation = '';
+    let recognitionHint = '';
+
+    if (item.id === 'item-1') {
+      // Focaccia
+      memoryTip = 'לחם חם תמיד פותח שולחן שמח. זכרו להציע ברגע שהלקוחות מתיישבים למנה לחלוקה.';
+      familiarAssociation = 'כמו הלחם שמוגש באיטליה בתחילת הארוחה יחד עם שמן זית מובחר ובלסמי.';
+      recognitionHint = 'בצק עבה וקריספי עם קרום שחום, מוגש חם מהתנור לצד צלוחית שמן זית.';
+    } else if (item.id === 'item-2') {
+      // Risotto
+      memoryTip = 'מנה כבדה, מנחמת ועשירה מאוד בחמאה ופרמז׳ן (חלבי). לא מתאימה למי שמחפש משהו קליל או טבעוני.';
+      familiarAssociation = 'תבשיל אורז איטלקי קטיפתי, דומה למרק סמיך ועשיר מאוד בטעמים אדמתיים.';
+      recognitionHint = 'מנה בהירה וקרמית, בולטת למרחקים בזכות הריח העז והייחודי של שמן הכמהין.';
+    } else if (item.id === 'item-3') {
+      // Quinoa salad
+      memoryTip = 'אופציה צבעונית, בריאה וקלילה. מצוינת לטבעונים ולרגישים לגלוטן. שימו לב לאלרגיית שקדים!';
+      familiarAssociation = 'סלט בריאות של סופר-פוד שנותן המון אנרגיה ולא מכביד על הבטן (Superfood bowl).';
+      recognitionHint = 'בולט בצבע האדום-סגול העז של הסלק והקינואה, עם נגיעות של ירוק ולבן מעל.';
+    }
+
     return {
       id: item.id,
       name: item.name,
       simpleDescription: item.description || '',
       ingredients: ingredients,
       allergens: allergens,
-      memoryTip: `זכור: ${item.name} היא מנה בולטת וחשובה.`,
-      familiarAssociation: 'מנה קלאסית ומוכרת.',
-      recognitionHint: 'זיהוי לפי המראה והריח הייחודי.',
+      memoryTip: memoryTip,
+      familiarAssociation: familiarAssociation,
+      recognitionHint: recognitionHint,
       relatedMenuItemIds: [],
     };
   });
@@ -28,38 +49,51 @@ export function generateFallbackMenuLearningPathV2(): MenuLearningPathV2 {
     dishes: dishes,
     comparisons: [
       {
-        title: 'השוואה בין מנות פתיחה',
+        title: 'מה להציע כפתיח: פוקאצ׳ה מול סלט קינואה?',
         dishIds: [MOCK_MENU_ITEMS[0].id, MOCK_MENU_ITEMS[2].id],
-        similarities: ['שתי המנות מתאימות כפתיח או לצד מנה עיקרית'],
-        differences: ['הפוקאצ׳ה היא בצק חם והסלט הוא מנה קרה וקלילה'],
-        recommendationGuidance: 'המלץ על פוקאצ׳ה לחלוקה למי שרעב מאוד, ועל סלט למי שמחפש פתיח קליל ובריא.',
+        similarities: ['שתי המנות יוצאות מהר מהמטבח ויכולות לשמש כמנות פתיחה נהדרות למרכז השולחן.'],
+        differences: ['הפוקאצ׳ה היא פחמימה חמה ומשביעה המכילה גלוטן, בעוד הסלט הוא מנה קרה, קלילה, בריאה וללא גלוטן (ויגן פרנדלי).'],
+        recommendationGuidance: 'לשולחן משפחתי או רעב מאוד - המלץ על פוקאצ׳ה לחלוקה. ללקוחות המחפשים משהו קליל, מתאמנים, טבעונים או נטולי גלוטן - המלץ בחום על הסלט.',
       }
     ],
     practiceItems: [
       {
         id: 'prac-1',
         type: 'match_dish_to_ingredients' as const,
-        question: 'אילו מרכיבים יש בריזוטו פטריות כמהין?',
-        options: ['אורז ארבוריו, חמאה ופטריות', 'קמח חיטה ושמן זית', 'קינואה אדומה וסלק'],
-        correctAnswer: 'אורז ארבוריו, חמאה ופטריות',
-        explanation: 'ריזוטו מבוסס על אורז ארבוריו ומוכן עם חמאה ופטריות לקבלת מרקם עשיר.',
+        question: 'לקוח שואל מאילו מרכיבים עשוי ריזוטו פטריות הכמהין, מה תענה?',
+        options: [
+          'אורז ארבוריו, חמאה ופטריות (מנה חלבית)', 
+          'קמח חיטה ושמן זית (מנה טבעונית)', 
+          'קינואה אדומה וסלק (מנה טבעונית)'
+        ],
+        correctAnswer: 'אורז ארבוריו, חמאה ופטריות (מנה חלבית)',
+        explanation: 'הריזוטו מבוסס על אורז ארבוריו ומכיל כמות גדולה של חמאה ופרמז׳ן כדי להגיע למרקם הקרמי שלו. לכן המנה חלבית ואינה ניתנת לטבעון.',
         relatedDishIds: [MOCK_MENU_ITEMS[1].id],
       }
     ],
     customerQA: [
       {
-        question: 'האם סלט הקינואה מכיל גלוטן?',
-        recommendedAnswer: 'לא, הסלט עצמו ללא גלוטן (קינואה, סלק, שקדים קלויים).',
+        question: 'לקוח שואל: "האם סלט הקינואה מתאים למי שרגיש במיוחד לגלוטן (צליאק)?"',
+        recommendedAnswer: 'הסלט עצמו מורכב ממרכיבים ללא גלוטן, אך המטבח שלנו אינו סטרילי מגלוטן. אני מיד אגש לבדוק מול השף האם נוכל להכין את הסלט בסביבת עבודה נקייה לחלוטין כדי להבטיח 100% ביטחון ללא זיהום משני.',
         relatedDishIds: [MOCK_MENU_ITEMS[2].id],
         source: 'ai' as const,
       }
     ],
     simulations: [
       {
-        scenarioTitle: 'לקוח עם רגישות לגלוטן',
-        customerOpeningMessage: 'שלום, אני רגיש לגלוטן ברמה קשה. האם יש פה מנות שאני יכול לאכול בבטחה?',
-        expectedFocusAreas: ['וידוא רמת הרגישות (צליאק או רגישות)', 'שליטה במנות נטולות גלוטן', 'אזהרה לגבי סביבת העבודה במטבח'],
-        feedbackCriteria: ['שקיפות ואמינות', 'ידע על אלרגנים', 'אמפתיה וסבלנות'],
+        scenarioTitle: 'לקוח עם רגישות מסכנת חיים לגלוטן (צליאק)',
+        customerOpeningMessage: 'שלום, אני חולה צליאק ויש לי רגישות קשה לגלוטן. אני מאוד מפחד מזיהום משני. אילו מנות אני יכול לאכול פה בבטחה בלי לקחת שום סיכון?',
+        expectedFocusAreas: [
+          'לגלות אמפתיה ללקוח ולהעניק תחושת ביטחון, לעולם לא לזלזל בחומרת האלרגיה.',
+          'לציין שמנות מסוימות (כמו סלט הקינואה) הן מטבען ללא גלוטן אך המטבח לא סטרילי.',
+          'להציע לבדוק פיזית מול מנהל המשמרת או השף אילו מנות ניתן להכין בפס עבודה נפרד וסטרילי.',
+          'לעולם לא להתחייב או להבטיח שהמנה בטוחה 100% לפני שבודקים עם המטבח.'
+        ],
+        feedbackCriteria: [
+          'זהירות ובטיחות הלקוח (הקריטריון הקריטי ביותר)',
+          'שירותיות, הכלה והרגעת הלקוח',
+          'היכרות עם המנות הרלוונטיות בתפריט (זיהוי סלט הקינואה כאופציה פוטנציאלית)'
+        ],
       }
     ]
   };

@@ -3,40 +3,24 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import type { LearningPathGoal } from "../../../../types/learningPath";
-
-// Maps difficulty values to Hebrew labels and color classes
-const DIFFICULTY_LABELS: Record<string, { label: string; classes: string }> = {
-  beginner: {
-    label: "מתחיל",
-    classes: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-900/50",
-  },
-  intermediate: {
-    label: "בינוני",
-    classes: "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-900/50",
-  },
-  advanced: {
-    label: "מתקדם",
-    classes: "bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-950/30 dark:text-rose-400 dark:border-rose-900/50",
-  },
-};
+import type { MenuDishLearningCardV2 } from "../../../../types/learningPath";
 
 export default function WaiterDashboard() {
   const params = useParams();
   const rawCode = params?.code;
   const code = Array.isArray(rawCode) ? rawCode[0] : (rawCode || "DEMO123");
 
-  const [goals, setGoals] = useState<LearningPathGoal[]>([]);
+  const [dishes, setDishes] = useState<MenuDishLearningCardV2[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleGenerateLearningPath() {
+  async function handleGenerateMenuLearningPath() {
     setLoading(true);
     setError(null);
-    setGoals([]);
+    setDishes([]);
 
     try {
-      const res = await fetch("/api/dev/learning-path");
+      const res = await fetch("/api/dev/menu-learning-path");
 
       if (!res.ok) {
         throw new Error(`שגיאת שרת: ${res.status}`);
@@ -44,11 +28,11 @@ export default function WaiterDashboard() {
 
       const json = await res.json();
 
-      if (!json.success || !json.data?.goals) {
+      if (!json.success || !json.data?.dishes) {
         throw new Error("לא התקבלו נתוני מסלול למידה תקינים.");
       }
 
-      setGoals(json.data.goals);
+      setDishes(json.data.dishes);
     } catch (err) {
       setError(
         err instanceof Error
@@ -90,7 +74,7 @@ export default function WaiterDashboard() {
           {/* Generate Button */}
           <button
             id="generate-learning-path-btn"
-            onClick={handleGenerateLearningPath}
+            onClick={handleGenerateMenuLearningPath}
             disabled={loading}
             className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-950 font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
           >
@@ -121,7 +105,7 @@ export default function WaiterDashboard() {
                 מייצר מסלול למידה...
               </>
             ) : (
-              "צור מסלול למידה"
+              "צור מסלול למידה תפריטי"
             )}
           </button>
         </div>
@@ -136,58 +120,74 @@ export default function WaiterDashboard() {
           </div>
         )}
 
-        {/* Goal Cards */}
-        {goals.length > 0 && (
+        {/* Dishes Cards */}
+        {dishes.length > 0 && (
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 px-1">
-              מסלול הלמידה שלך
+              הכר את המנות
             </h2>
 
-            {goals.map((goal, index) => {
-              const difficulty = DIFFICULTY_LABELS[goal.difficulty] ?? {
-                label: goal.difficulty,
-                classes: "bg-zinc-100 text-zinc-600 border-zinc-200 dark:bg-zinc-800 dark:text-zinc-400 dark:border-zinc-700",
-              };
-
-              return (
-                <div
-                  key={index}
-                  className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200/80 dark:border-zinc-800 p-6 space-y-3"
-                >
-                  {/* Goal header */}
-                  <div className="flex items-start justify-between gap-3 flex-wrap">
-                    <h3 className="text-base font-bold text-zinc-900 dark:text-zinc-50 leading-snug">
-                      {index + 1}. {goal.title}
-                    </h3>
-                    {/* Difficulty badge */}
-                    <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold border shrink-0 ${difficulty.classes}`}
-                    >
-                      {difficulty.label}
-                    </span>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                    {goal.description}
-                  </p>
-
-                  {/* Focus Areas */}
-                  {goal.focusAreas.length > 0 && (
-                    <div className="flex flex-wrap gap-2 pt-1">
-                      {goal.focusAreas.map((area, areaIdx) => (
-                        <span
-                          key={areaIdx}
-                          className="px-2.5 py-1 rounded-lg text-xs font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700"
-                        >
-                          {area}
-                        </span>
-                      ))}
-                    </div>
-                  )}
+            {dishes.map((dish, index) => (
+              <div
+                key={dish.id || index}
+                className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200/80 dark:border-zinc-800 overflow-hidden flex flex-col sm:flex-row"
+              >
+                {/* Image Placeholder */}
+                <div className="w-full sm:w-1/3 bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center p-6 min-h-[160px]">
+                  <span className="text-zinc-400 dark:text-zinc-500 text-sm font-medium">
+                    {dish.name} (תמונה)
+                  </span>
                 </div>
-              );
-            })}
+                
+                {/* Content */}
+                <div className="p-6 sm:w-2/3 space-y-4">
+                  <div>
+                    <h3 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">
+                      {dish.name}
+                    </h3>
+                    <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
+                      {dish.simpleDescription}
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 gap-3 text-sm">
+                    {dish.ingredients && dish.ingredients.length > 0 && (
+                      <div>
+                        <span className="font-semibold text-zinc-800 dark:text-zinc-200">מרכיבים: </span>
+                        <span className="text-zinc-600 dark:text-zinc-400">{dish.ingredients.join(', ')}</span>
+                      </div>
+                    )}
+                    
+                    {dish.allergens && dish.allergens.length > 0 && (
+                      <div>
+                        <span className="font-semibold text-rose-600 dark:text-rose-400">אלרגנים: </span>
+                        <span className="text-zinc-600 dark:text-zinc-400">{dish.allergens.join(', ')}</span>
+                      </div>
+                    )}
+                    
+                    {dish.recognitionHint && (
+                      <div>
+                        <span className="font-semibold text-zinc-800 dark:text-zinc-200">זיהוי: </span>
+                        <span className="text-zinc-600 dark:text-zinc-400">{dish.recognitionHint}</span>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="pt-2 flex flex-col gap-2">
+                    {dish.memoryTip && (
+                      <div className="bg-amber-50 dark:bg-amber-950/30 text-amber-800 dark:text-amber-400 p-3 rounded-xl border border-amber-200/50 dark:border-amber-900/50 text-sm">
+                        💡 <strong>טיפ לזיכרון:</strong> {dish.memoryTip}
+                      </div>
+                    )}
+                    {dish.familiarAssociation && (
+                      <div className="bg-blue-50 dark:bg-blue-950/30 text-blue-800 dark:text-blue-400 p-3 rounded-xl border border-blue-200/50 dark:border-blue-900/50 text-sm">
+                        🔗 <strong>אסוציאציה:</strong> {dish.familiarAssociation}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
