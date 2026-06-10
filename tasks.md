@@ -56,7 +56,8 @@
 6. **בדיקות נדרשות:** לחיצה על הלשוניות השונות בדפדפן ווידוא מעבר חלק והצגת כיתוב "בקרוב" בלשוניות החדשות.
 
 
-### משימה 7: יצירת ובדיקת Skill menu-practice-generator
+### [x] משימה 7: יצירת ובדיקת Skill menu-practice-generator
+**Completed: Created and tested menu-practice-generator with category-aware distractors, duplicate prevention, and insufficient-data fallback.**
 1. **מטרה:** יצירת קובץ Skill חדש המנחה את ה-AI בייצור שאלות זיכרון עובדתיות מגוונות (למשל: זיהוי תמונה, רכיב חסר, אלרגנים, מנות טבעוניות) מתוך תפריט המסעדה.
 2. **זמן:** 20-30 דקות
 3. **תלות:** משימה 6
