@@ -104,11 +104,13 @@
 1. **מטרה:** תכנון סכמת `restaurant_members`, והרשאות קריאה וכתיבה מתאימות למנהלים ולמלצרים.
 2. **זמן:** 20-30 דקות.
 
-### משימה 17: יצירת Migration בלבד
+### [x] משימה 17: יצירת Migration בלבד
+**Completed: Created and applied manager membership RLS and tightened API table privileges in Supabase.**
 1. **מטרה:** כתיבת ה-Migration עצמו כקובץ מבוסס התכנון ב-`supabase/migrations/`.
 2. **זמן:** 20-30 דקות.
 
-### משימה 18: הרצה ידנית ואימות ב-Supabase
+### [x] משימה 18: הרצה ידנית ואימות ב-Supabase
+**Completed: Created and applied manager membership RLS and tightened API table privileges in Supabase.**
 1. **מטרה:** הפעלת ה-Migration בענן, וידוא טבלאות ו-Policies.
 2. **זמן:** 20-30 דקות.
 
