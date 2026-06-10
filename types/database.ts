@@ -22,6 +22,11 @@ export interface MenuItem {
   price: number | null;
   manager_note: string | null;
   created_at: string;
+  category?: string;
+  spice_level?: string;
+  modification_rules?: string[];
+  service_notes?: string[];
+  include_in_memory_game?: boolean;
 }
 
 export interface MenuIngredient {
