@@ -15,6 +15,22 @@ export async function getMenuItemsByRestaurantId(supabase: SupabaseClient, resta
   return data || [];
 }
 
+export async function getActiveMenuItemsByRestaurantId(supabase: SupabaseClient, restaurantId: string): Promise<MenuItem[]> {
+  const { data, error } = await supabase
+    .from('menu_items')
+    .select('*')
+    .eq('restaurant_id', restaurantId)
+    .eq('is_active', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching active menu items:', error);
+    return [];
+  }
+  return data || [];
+}
+
+
 export async function getMenuItemById(supabase: SupabaseClient, id: string): Promise<MenuItem | null> {
   const { data, error } = await supabase
     .from('menu_items')

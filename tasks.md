@@ -92,7 +92,8 @@
 1. **מטרה:** עדכון `types/database.ts` כך ש-`MenuItem` יכלול את `category_id` (במקום `category`), מערכים ו-`custom_attributes`. הוספת טיפוס `MenuCategory`.
 2. **זמן:** 10 דקות.
 
-### משימה 14: עדכון פונקציות DB
+### [x] משימה 14: עדכון פונקציות DB
+**Completed: Added restaurant-scoped read functions for active menu items and menu categories.**
 1. **מטרה:** עדכון `lib/db/menuItems.ts` ו-`restaurants.ts` לתמיכה בשדות החדשים וטבלאות מקושרות, כולל העלאת `menu_version`.
 2. **זמן:** 30 דקות.
 
