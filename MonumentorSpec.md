@@ -13,15 +13,17 @@
 - WHEN a Manager uploads a PDF or Image menu THE SYSTEM SHALL extract dishes, ingredients, and allergens into a structured JSON format and store it in the database.
 - WHILE the user is in a "Simulation Session" THE SYSTEM SHALL retain previous messages in the conversation history array sent to the LLM.
 - WHEN the user submits a simulation response THE SYSTEM SHALL return feedback evaluating both factual menu accuracy and hospitality tone.
-- WHEN the user requests a "Short Learning Path" THE SYSTEM SHALL algorithmically generate a 5-question quiz based on the 5 least-practiced menu items for that user.
-- WHEN the user queries the "Fast Search" input THE SYSTEM SHALL perform a semantic similarity search against the restaurant's menu embeddings and return the top 3 results.
+- WHEN the user navigates to the Dashboard THE SYSTEM SHALL display three learning areas: "הכרת המנות" (Menu Knowledge), "משחק זיכרון וזיהוי" (Memory Game), and "תרגול מול לקוח" (Customer Simulation).
+- WHEN the user plays the "Memory Game" THE SYSTEM SHALL generate a 10-question multiple-choice quiz using deterministic logic based on active menu items, providing immediate feedback without tracking user scores.
 - IF the AI fails to parse the uploaded PDF menu THE SYSTEM SHALL display the error message: "Failed to read menu. Please ensure the file is a clear PDF or JPG."
 
 ## Out of Scope
 - Point of Sale (POS) integration.
 - Custom UI themes per restaurant (only standard Light/Dark mode + HE/EN).
-- Voice-to-text or Text-to-voice (audio transcriptions removed per user requirement).
+- Voice-to-text or Text-to-voice.
 - Employee scheduling or payroll features.
+- Semantic similarity search, Fast Search, and pgvector (moved to Future).
+- User authentication, saving scores, learning history, or least-practiced item tracking (not in MVP).
 
 ## Acceptance Criteria (GWT format)
 - **Scenario: Successful Simulation Turn**
@@ -48,9 +50,9 @@
 - **Failure mode:** Invalid auth token returns HTTP `401 Unauthorized` with body `{"error": "Session expired. Please log in again."}`.
 
 ## Performance
-- **Latency target:** AI Chat response < 2500ms (P95). Semantic Search < 500ms (P95). UI interactions (language toggle, tab switch) < 100ms.
+- **Latency target:** AI Chat response < 2500ms (P95). UI interactions (language toggle, tab switch) < 100ms.
 - **Maximum payload size:** PDF/Image upload limited to 5MB.
-- **Caching policy:** Menu metadata and embeddings heavily cached (TTL 24 hours). Invalidate cache immediately WHEN Manager uploads a new menu. AI Chat responses must NOT be cached.
+- **Caching policy:** Menu metadata heavily cached (TTL 24 hours). Invalidate cache immediately WHEN Manager uploads a new menu. AI Chat responses must NOT be cached.
 
 ## Edge Cases
 - **Empty Menu DB** → IF a waiter starts a simulation but no menu exists, SYSTEM SHALL display "Your manager hasn't uploaded a menu yet." and disable the chat input.
@@ -62,7 +64,6 @@
 | :--- | :--- | :--- | :--- |
 | **AI Memory** | Vercel AI SDK `useChat` | Custom state array | Handles streaming and statefulness out-of-the-box perfectly for chat UIs. |
 | **Menu Parsing** | Multimodal LLM Vision API | OCR libraries (Tesseract) | LLMs provide superior semantic structuring (separating ingredients from descriptions) from raw images. |
-| **Search Engine** | pgvector (Supabase) | Algolia / Elasticsearch | Keeps stack consolidated; natural language queries map well to embeddings. |
 | **Upselling Logic** | Prompt Engineering | Hardcoded rules | Required to be "culinary based" (pairings), which is fluid and better handled by LLM reasoning than strict DB tables. |
 
 ## Open Questions
@@ -72,5 +73,4 @@
 - [ ] `POST /api/chat` returns 200 with streaming text response matching the feedback JSON schema.
 - [ ] `POST /api/upload` successfully parses a test PDF and inserts rows into the `menu_items` table.
 - [ ] Language toggle clicks mutate the `next-intl` or `i18next` locale context and re-render the DOM without full page reload.
-- [ ] E2E test passes: User logs in, searches for "vegan options", and receives a list of 2+ items.
 - [ ] Lighthouse performance score > 90 on mobile.
