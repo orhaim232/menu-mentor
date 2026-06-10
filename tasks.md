@@ -40,7 +40,8 @@
 
 ## שלב 3: ממשק משתמש (UI MVP)
 
-### משימה 5: מסך בית וכניסה
+### [x] משימה 5: מסך בית וכניסה
+**Completed: Home page is implemented at app/page.tsx, allowing code entry and correct routing to manager setup or waiter dashboard.**
 1. **מטרה:** מסך `Home` לבחירת תפקיד והזנת קוד מסעדה.
 2. **אזורים רלוונטיים:** `app/page.tsx`.
 3. **קריטריון הצלחה:** ניתוב נכון לפי קוד למסך מנהל או מלצר.
@@ -51,6 +52,7 @@
 3. **קריטריון הצלחה:** מנהל יכול לראות ולהוסיף מנות באופן פשוט.
 
 ### משימה 7: דאשבורד מסלול הלמידה למלצר
+**Partially Completed: Waiter dashboard is implemented at app/waiter/[code]/dashboard/page.tsx and displays dishes from the learning path, but selection of specific practice targets/goals is not yet supported.**
 1. **מטרה:** מסך המציג למלצר את המשימות שנוצרו במשימה 4.
 2. **אזורים רלוונטיים:** `app/waiter/[code]/dashboard/page.tsx`.
 3. **קריטריון הצלחה:** המלצר רואה מה הוא אמור לתרגל ובוחר יעד.
