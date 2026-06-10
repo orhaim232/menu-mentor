@@ -88,7 +88,8 @@
 **Completed: Created and successfully applied the generic menu schema migration in Supabase.**
 1. **מטרה:** הפעלת ה-SQL במסד הנתונים בענן ליצירת הטבלאות.
 
-### משימה 13: עדכון טיפוסי TypeScript
+### [x] משימה 13: עדכון טיפוסי TypeScript
+**Completed: Aligned database types, added MenuCategory, updated mock data, and verified build.**
 1. **מטרה:** עדכון `types/database.ts` כך ש-`MenuItem` יכלול את `category_id` (במקום `category`), מערכים ו-`custom_attributes`. הוספת טיפוס `MenuCategory`.
 2. **זמן:** 10 דקות.
 
@@ -100,7 +101,8 @@
 ### [x] משימה 15: עדכון SPEC ו-tasks לאימות מנהל Invite-only
 1. **מטרה:** הוספת Auth, RLS ותכנון הגנה מבוססת `restaurant_members` ב-SPEC ו-`tasks.md`.
 
-### משימה 16: תכנון Migration ל-restaurant_members, grants ו-RLS
+### [x] משימה 16: תכנון Migration ל-restaurant_members, grants ו-RLS
+**Completed: Planned manager membership schema, RLS policies, grants, and verification flow.**
 1. **מטרה:** תכנון סכמת `restaurant_members`, והרשאות קריאה וכתיבה מתאימות למנהלים ולמלצרים.
 2. **זמן:** 20-30 דקות.
 
