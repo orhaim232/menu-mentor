@@ -24,7 +24,17 @@
 - Voice-to-text or Text-to-voice.
 - Employee scheduling or payroll features.
 - Semantic similarity search, Fast Search, and pgvector (moved to Future).
-- User authentication, saving scores, learning history, or least-practiced item tracking (not in MVP).
+- Saving scores, learning history, or least-practiced item tracking (not in MVP).
+
+## Security & Manager Auth
+- **Authentication:** Supabase Auth using Email Magic Link (`signInWithOtp` with `shouldCreateUser: false` to enforce invite-only).
+- **Authorization:** Two roles: `waiter` (anon) and `manager` (authenticated).
+  - Managers are linked to restaurants via `restaurant_members` table (UUID `id`, `user_id`, `restaurant_id`, `role='manager'` with CHECK, unique constraint on user+restaurant).
+  - Waiters access dashboard anonymously (read-only) via restaurant code. No write permissions for `anon`.
+- **Server Protection:** Manager routes (e.g., `/manager/setup`) are protected server-side checking session and `restaurant_members`. A `proxy.ts` is used for basic session refresh/redirects.
+- **Input validation:** Search input maximum 200 characters. Chat input maximum 500 characters. Sanitized using `DOMPurify` on the client and parameterized queries on the server.
+- **Sensitive data:** LLM prompts must NOT contain PII (user emails, names). System logs must redact the JWT token.
+- **Failure mode:** Invalid auth token returns HTTP `401 Unauthorized` with body `{"error": "Session expired. Please log in again."}`.
 
 ## Acceptance Criteria (GWT format)
 - **Scenario: Successful Simulation Turn**
@@ -38,17 +48,9 @@
   - THEN a toast with text "Parsing menu..." appears
   - AND the system creates vector embeddings for the extracted text.
 - **Scenario: Unauthorized Access**
-  - GIVEN an unauthenticated user
-  - WHEN they navigate directly to `/practice`
-  - THEN the system redirects to `/login`
-  - AND clears any local storage session data.
-
-## Security
-- **Authentication:** Supabase Auth (JWT). Tokens stored in `HttpOnly` secure cookies.
-- **Authorization:** Two roles: `waiter` and `manager`. Managers can `POST /api/menu`. Waiters get `403 Forbidden` for that endpoint.
-- **Input validation:** Search input maximum 200 characters. Chat input maximum 500 characters. Sanitized using `DOMPurify` on the client and parameterized queries on the server.
-- **Sensitive data:** LLM prompts must NOT contain PII (user emails, names). System logs must redact the JWT token.
-- **Failure mode:** Invalid auth token returns HTTP `401 Unauthorized` with body `{"error": "Session expired. Please log in again."}`.
+  - GIVEN an unauthenticated manager user
+  - WHEN they navigate directly to `/manager/setup`
+  - THEN the system redirects to `/manager/login`
 
 ## Performance
 - **Latency target:** AI Chat response < 2500ms (P95). UI interactions (language toggle, tab switch) < 100ms.
