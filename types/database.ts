@@ -11,7 +11,19 @@ export interface Restaurant {
   id: string; // UUID
   name: string;
   general_notes: string | null;
+  menu_version: number;
   created_at: string;
+  updated_at: string;
+}
+
+export interface MenuCategory {
+  id: string; // UUID
+  restaurant_id: string; // UUID references Restaurant.id
+  name: string;
+  sort_order: number;
+  is_active: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface MenuItem {
@@ -21,12 +33,16 @@ export interface MenuItem {
   description: string | null;
   price: number | null;
   manager_note: string | null;
+  category_id?: string | null;
+  service_notes: string[];
+  modification_rules: string[];
+  custom_attributes: Record<string, unknown>;
+  image_url?: string | null;
+  image_source?: 'uploaded' | 'ai-illustration' | null;
+  is_active: boolean;
+  include_in_memory_game: boolean;
   created_at: string;
-  category?: string;
-  spice_level?: string;
-  modification_rules?: string[];
-  service_notes?: string[];
-  include_in_memory_game?: boolean;
+  updated_at: string;
 }
 
 export interface MenuIngredient {

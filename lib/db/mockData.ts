@@ -1,10 +1,14 @@
 import { Restaurant, MenuItem, MenuIngredient, MenuAllergen, MenuItemTag } from '../../types/database';
 
+const MOCK_DATE = new Date().toISOString();
+
 export const MOCK_RESTAURANT: Restaurant = {
   id: 'DEMO123',
   name: 'המסעדה של מנטור (Demo)',
   general_notes: 'דגשים למלצרים: להמליץ תמיד על שתייה חמה בסוף הארוחה. לשים לב במיוחד לאלרגיות בוטנים וגלוטן - חובה לשאול כל שולחן. לשמור על טון שירותי, אדיב ומזמין. לחייך!',
-  created_at: new Date().toISOString(),
+  menu_version: 1,
+  created_at: MOCK_DATE,
+  updated_at: MOCK_DATE,
 };
 
 export const MOCK_MENU_ITEMS: MenuItem[] = [
@@ -15,7 +19,16 @@ export const MOCK_MENU_ITEMS: MenuItem[] = [
     description: 'פוקאצ׳ה טרייה הנאפית במקום, מוגשת עם מטבל שמן זית, בלסמי ומלח ים.',
     price: 32,
     manager_note: 'מצוין בתור פתיח לזוג או שלישייה. יוצא מהר יחסית, כ-5 דקות.',
-    created_at: new Date().toISOString(),
+    category_id: null,
+    service_notes: [],
+    modification_rules: [],
+    custom_attributes: {},
+    image_url: null,
+    image_source: null,
+    is_active: true,
+    include_in_memory_game: true,
+    created_at: MOCK_DATE,
+    updated_at: MOCK_DATE,
   },
   {
     id: 'item-2',
@@ -24,7 +37,16 @@ export const MOCK_MENU_ITEMS: MenuItem[] = [
     description: 'ריזוטו קרמי עם פטריות פורטובלו, שימג׳י, שמן כמהין ופרמז׳ן.',
     price: 68,
     manager_note: 'מנה מאוד כבדה ועשירה. לא מתאימה למי שמחפש משהו קליל. אי אפשר לעשות טבעוני כי יש המון חמאה בבסיס.',
-    created_at: new Date().toISOString(),
+    category_id: null,
+    service_notes: [],
+    modification_rules: [],
+    custom_attributes: {},
+    image_url: null,
+    image_source: null,
+    is_active: true,
+    include_in_memory_game: true,
+    created_at: MOCK_DATE,
+    updated_at: MOCK_DATE,
   },
   {
     id: 'item-3',
@@ -33,7 +55,16 @@ export const MOCK_MENU_ITEMS: MenuItem[] = [
     description: 'קינואה אדומה, סלק אפוי, שקדים קלויים, פטרוזיליה ורוטב ויניגרט הדרים.',
     price: 54,
     manager_note: 'מנה מעולה לטבעונים. אפשר להציע תוספת עוף או גבינת פטה בתשלום נוסף.',
-    created_at: new Date().toISOString(),
+    category_id: null,
+    service_notes: [],
+    modification_rules: [],
+    custom_attributes: {},
+    image_url: null,
+    image_source: null,
+    is_active: true,
+    include_in_memory_game: true,
+    created_at: MOCK_DATE,
+    updated_at: MOCK_DATE,
   },
   {
     id: 'item-4',
@@ -42,7 +73,16 @@ export const MOCK_MENU_ITEMS: MenuItem[] = [
     description: 'מרנג פריך, קרם מסקרפונה, ורוטב פירות יער חמצמץ.',
     price: 48,
     manager_note: 'קינוח הדגל שלנו. חובה להמליץ עליו לכל שולחן שמתלבט.',
-    created_at: new Date().toISOString(),
+    category_id: null,
+    service_notes: [],
+    modification_rules: [],
+    custom_attributes: {},
+    image_url: null,
+    image_source: null,
+    is_active: true,
+    include_in_memory_game: true,
+    created_at: MOCK_DATE,
+    updated_at: MOCK_DATE,
   },
   {
     id: 'item-5',
@@ -51,7 +91,16 @@ export const MOCK_MENU_ITEMS: MenuItem[] = [
     description: 'ג׳ין, מחית פסיפלורה, לימון ונגיעת קמפרי.',
     price: 42,
     manager_note: 'לא להגיש לנשים בהיריון. לבקש תעודת זהות ממי שנראה צעיר.',
-    created_at: new Date().toISOString(),
+    category_id: null,
+    service_notes: [],
+    modification_rules: [],
+    custom_attributes: {},
+    image_url: null,
+    image_source: null,
+    is_active: true,
+    include_in_memory_game: true,
+    created_at: MOCK_DATE,
+    updated_at: MOCK_DATE,
   }
 ];
 
