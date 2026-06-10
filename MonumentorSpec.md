@@ -76,6 +76,15 @@
   - Older questions are retained in the database for historical/documentation purposes but are not displayed in the game.
   - Refreshing questions creates new `pending` questions for the updated `menu_version`.
 
+## Generic Menu Schema Architecture
+- **Goal:** Support any restaurant type (Asian, Italian, Bar) without hardcoded columns like `spice_level` or `pasta_type`.
+- **Categories:** Uses a dedicated `menu_categories` table (`id`, `restaurant_id`, `name`). `menu_items` links via `category_id`.
+- **Standardized Attributes:**
+  - `service_notes` (text[]): Operational instructions for waiters.
+  - `modification_rules` (text[]): Allowed/forbidden changes.
+  - `custom_attributes` (JSONB): Flexible key-value pairs for restaurant-specific data (e.g., `{"spice_level": "spicy"}` or `{"pasta_type": "penne"}`).
+- **Ingredients/Allergens/Tags:** Remain in their dedicated linked tables, NOT inside `custom_attributes`.
+
 - **Memory Game Option Logic:**
   - Multiple-choice questions require 4 options: 1 correct dish/option + 3 valid distractors.
   - Distractors must come from the same category.
