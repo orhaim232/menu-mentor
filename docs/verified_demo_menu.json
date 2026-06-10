@@ -1,0 +1,386 @@
+{
+  "purpose": "Safe demo subset extracted from the uploaded restaurant training sheets.",
+  "rules": [
+    "Use only explicit facts in ingredients, allergens and dietary tags.",
+    "Fields marked as requiring verification must not be used for factual quiz questions.",
+    "Estimated prices are for demo only.",
+    "No image questions until image URLs are added.",
+    "All 16 dishes may be used for ingredient/name questions; allergen questions only when allergens_explicit is non-empty."
+  ],
+  "category_labels": {
+    "starters": "מנות ראשונות",
+    "special-rolls": "רולים מיוחדים"
+  },
+  "dishes": [
+    {
+      "id": "kimchi",
+      "category": "starters",
+      "name": "קימצ׳י",
+      "ingredients": [
+        "כרוב",
+        "גזר",
+        "שומשום",
+        "צ׳ילי מתוק"
+      ],
+      "allergens_explicit": [
+        "שומשום"
+      ],
+      "dietary_tags_explicit": [
+        "טבעוני",
+        "ללא גלוטן"
+      ],
+      "spice_level": "חריף קל",
+      "modification_rules": [],
+      "service_notes": [],
+      "estimated_price": 32
+    },
+    {
+      "id": "som-tam",
+      "category": "starters",
+      "name": "סום טאם",
+      "ingredients": [
+        "פפאיה ירוקה",
+        "מנגו ירוק או פומלה בעונה",
+        "נענע",
+        "עגבניות שרי",
+        "כוסברה",
+        "בצל",
+        "קשיו קלוי",
+        "צ׳ילי"
+      ],
+      "allergens_explicit": [
+        "קשיו",
+        "דגים"
+      ],
+      "dietary_tags_explicit": [],
+      "spice_level": "חריף",
+      "modification_rules": [],
+      "service_notes": [
+        "הרוטב מסומן במקור כללא גלוטן."
+      ],
+      "estimated_price": 56
+    },
+    {
+      "id": "river-salad",
+      "category": "starters",
+      "name": "סלט ריבר",
+      "ingredients": [
+        "עלי סלנובה",
+        "בוטנים קלויים וקצוצים",
+        "קריספי בטטה",
+        "ויניגרט הבית"
+      ],
+      "allergens_explicit": [
+        "בוטנים"
+      ],
+      "dietary_tags_explicit": [],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "לפי המקור המיונז מפוסטר.",
+        "הערת עבודה: ערבוב בכף וסכין."
+      ],
+      "estimated_price": 54
+    },
+    {
+      "id": "bang-bang-salad",
+      "category": "starters",
+      "name": "סלט בנג בנג",
+      "ingredients": [
+        "מלפפון",
+        "סלק",
+        "גזר",
+        "בצל סגול",
+        "כוסברה",
+        "נענע",
+        "קריספי שאלוט",
+        "רוטב צ׳ילי-ליים",
+        "קרם בוטנים"
+      ],
+      "allergens_explicit": [
+        "בוטנים",
+        "דגים",
+        "גלוטן"
+      ],
+      "dietary_tags_explicit": [],
+      "spice_level": "חריף",
+      "modification_rules": [],
+      "service_notes": [],
+      "estimated_price": 58
+    },
+    {
+      "id": "vietnamese-nams",
+      "category": "starters",
+      "name": "נאמס וייטנאמי",
+      "ingredients": [
+        "דף אורז",
+        "עוף",
+        "גזר",
+        "שיטאקה",
+        "אטריות",
+        "בצל",
+        "רוטב פונזו",
+        "צ׳ימיצ׳ורי"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "יש לשאול אם הלקוח מכיר את המנה ואת צורת האכילה.",
+        "מידע על גלוטן בפונזו דורש אימות."
+      ],
+      "estimated_price": 52
+    },
+    {
+      "id": "vegetarian-nams",
+      "category": "starters",
+      "name": "נאמס צמחוני",
+      "ingredients": [
+        "דף אורז",
+        "כרוב",
+        "גזר",
+        "שיטאקה",
+        "בצל",
+        "אטריות שעועית"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [
+        "צמחוני"
+      ],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "הצבע הירוק של המנה אכיל."
+      ],
+      "estimated_price": 48
+    },
+    {
+      "id": "mushroom-gyoza",
+      "category": "starters",
+      "name": "גיוזה פטריות",
+      "ingredients": [
+        "פטריות שמפיניון",
+        "שיטאקה",
+        "פורטובלו",
+        "מחית כמהין",
+        "בצל ירוק",
+        "קשיו"
+      ],
+      "allergens_explicit": [
+        "קשיו"
+      ],
+      "dietary_tags_explicit": [
+        "צמחוני"
+      ],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "מידע על גלוטן בבצק או בפונזו דורש אימות."
+      ],
+      "estimated_price": 48
+    },
+    {
+      "id": "vegetable-spring-roll",
+      "category": "starters",
+      "name": "אגרול ירקות",
+      "ingredients": [
+        "כרוב",
+        "גזר",
+        "בצל",
+        "נבטים",
+        "רוטב חמוץ-מתוק"
+      ],
+      "allergens_explicit": [
+        "גלוטן"
+      ],
+      "dietary_tags_explicit": [
+        "צמחוני"
+      ],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [],
+      "estimated_price": 38
+    },
+    {
+      "id": "super-spicy-salmon",
+      "category": "special-rolls",
+      "name": "סופר ספייסי סלמון",
+      "english_name": "SUPER SPICY SALMON",
+      "ingredients": [
+        "סלמון גריל",
+        "מלפפון",
+        "איולי ספייסי",
+        "סלמון נא",
+        "צ׳ילי חריף",
+        "לימון"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [],
+      "spice_level": "חריף",
+      "modification_rules": [
+        "אפשר להחליף סלמון גריל בסלמון נא.",
+        "אפשר להכין את כל הרול בגריל."
+      ],
+      "service_notes": [],
+      "estimated_price": 72
+    },
+    {
+      "id": "monsun-roll",
+      "category": "special-rolls",
+      "name": "מונסון רול",
+      "english_name": "MONSUN ROLL",
+      "ingredients": [
+        "ספייסי טונה",
+        "אבוקדו",
+        "מלפפון",
+        "סלמון צרוב",
+        "שבבי בטטה"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [],
+      "spice_level": "חריף",
+      "modification_rules": [
+        "אפשר להחליף טונה בסלמון; הניסוח המדויק של הכיוון ההפוך דורש אימות."
+      ],
+      "service_notes": [],
+      "estimated_price": 74
+    },
+    {
+      "id": "yami-roll",
+      "category": "special-rolls",
+      "name": "יאמי רול",
+      "english_name": "YAMI ROLL",
+      "ingredients": [
+        "טונה",
+        "סלמון",
+        "מלפפון",
+        "עירית",
+        "אבוקדו",
+        "שבבי טמפורה"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "מידע על גלוטן בטמפורה דורש אימות."
+      ],
+      "estimated_price": 70
+    },
+    {
+      "id": "mix-dagim",
+      "category": "special-rolls",
+      "name": "מיקס דגים",
+      "english_name": "MIX DAGIM",
+      "ingredients": [
+        "אבוקדו",
+        "מלפפון",
+        "עירית",
+        "טונה",
+        "סלמון",
+        "דג לבן"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "הדגים נמצאים רק בחלק החיצוני של הרול."
+      ],
+      "estimated_price": 74
+    },
+    {
+      "id": "hot-roll",
+      "category": "special-rolls",
+      "name": "הוט רול",
+      "english_name": "HOT ROLL",
+      "ingredients": [
+        "אבוקדו",
+        "מלפפון",
+        "סלמון צרוב",
+        "טריאקי",
+        "שקדים קלויים"
+      ],
+      "allergens_explicit": [
+        "שקדים"
+      ],
+      "dietary_tags_explicit": [],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [
+        "מידע על גלוטן בטריאקי דורש אימות."
+      ],
+      "estimated_price": 68
+    },
+    {
+      "id": "grill-roll",
+      "category": "special-rolls",
+      "name": "גריל רול",
+      "english_name": "GRILL ROLL",
+      "ingredients": [
+        "סלמון צלוי",
+        "מלפפון",
+        "אבוקדו",
+        "שומשום"
+      ],
+      "allergens_explicit": [
+        "שומשום"
+      ],
+      "dietary_tags_explicit": [],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [],
+      "estimated_price": 66
+    },
+    {
+      "id": "vegi-roll",
+      "category": "special-rolls",
+      "name": "וג׳י",
+      "english_name": "VEGI",
+      "ingredients": [
+        "טמאגו",
+        "אבוקדו",
+        "מלפפון",
+        "שומשום"
+      ],
+      "allergens_explicit": [
+        "ביצים",
+        "שומשום"
+      ],
+      "dietary_tags_explicit": [
+        "צמחוני"
+      ],
+      "spice_level": "לא צוין",
+      "modification_rules": [],
+      "service_notes": [],
+      "estimated_price": 54
+    },
+    {
+      "id": "tuna-jalapeno-roll",
+      "category": "special-rolls",
+      "name": "טונה חלפיניו רול",
+      "english_name": "TUNA JALAPEÑO ROLL",
+      "ingredients": [
+        "טונה",
+        "מלפפון",
+        "אבוקדו",
+        "ספייסי טוביקו",
+        "סלסת חלפיניו",
+        "בצל לבן",
+        "פונזו",
+        "בצל ירוק"
+      ],
+      "allergens_explicit": [],
+      "dietary_tags_explicit": [],
+      "spice_level": "חריף",
+      "modification_rules": [
+        "אפשר לשנות ירקות."
+      ],
+      "service_notes": [
+        "מידע על גלוטן בפונזו דורש אימות."
+      ],
+      "estimated_price": 76
+    }
+  ]
+}

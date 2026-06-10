@@ -14,7 +14,8 @@
 - WHILE the user is in a "Simulation Session" THE SYSTEM SHALL retain previous messages in the conversation history array sent to the LLM.
 - WHEN the user submits a simulation response THE SYSTEM SHALL return feedback evaluating both factual menu accuracy and hospitality tone.
 - WHEN the user navigates to the Dashboard THE SYSTEM SHALL display three learning areas: "הכרת המנות" (Menu Knowledge), "משחק זיכרון וזיהוי" (Memory Game), and "תרגול מול לקוח" (Customer Simulation).
-- WHEN the user plays the "Memory Game" THE SYSTEM SHALL generate a 10-question multiple-choice quiz using deterministic logic based on active menu items, providing immediate feedback without tracking user scores.
+- WHEN the Manager triggers question generation THE SYSTEM SHALL deterministically generate, validate, and save practice questions to a question bank.
+- WHEN the user plays the "Memory Game" THE SYSTEM SHALL retrieve up to 10 approved questions from the pre-generated question bank, shuffle them locally, and provide immediate feedback without tracking user scores.
 - IF the AI fails to parse the uploaded PDF menu THE SYSTEM SHALL display the error message: "Failed to read menu. Please ensure the file is a clear PDF or JPG."
 
 ## Out of Scope
@@ -65,6 +66,23 @@
 | **AI Memory** | Vercel AI SDK `useChat` | Custom state array | Handles streaming and statefulness out-of-the-box perfectly for chat UIs. |
 | **Menu Parsing** | Multimodal LLM Vision API | OCR libraries (Tesseract) | LLMs provide superior semantic structuring (separating ingredients from descriptions) from raw images. |
 | **Upselling Logic** | Prompt Engineering | Hardcoded rules | Required to be "culinary based" (pairings), which is fluid and better handled by LLM reasoning than strict DB tables. |
+
+## Question Bank & Menu Versioning
+- **Restaurant Menu Versioning:**
+  - The `restaurants` table includes a `menu_version` field (`integer`, default `1`).
+  - On any menu update or save, `menu_version` is incremented by 1.
+  - Practice questions in the question bank are stored with a `generated_from_menu_version` reference.
+  - Waiters only receive `approved` questions matching the current `menu_version` of the restaurant.
+  - Older questions are retained in the database for historical/documentation purposes but are not displayed in the game.
+  - Refreshing questions creates new `pending` questions for the updated `menu_version`.
+
+- **Memory Game Option Logic:**
+  - Multiple-choice questions require 4 options: 1 correct dish/option + 3 valid distractors.
+  - Distractors must come from the same category.
+  - If a category contains only 3 dishes, the question will present 3 options.
+  - If a category contains 2 dishes, the question will present 2 options.
+  - If a category has less than 2 dishes (insufficient data), the question is skipped.
+  - No artificial dishes shall be created or added to force a 4-option count.
 
 ## Open Questions
 - **[MINOR] Image Storage:** Do we need to retain the original PDF/Image file in an S3 bucket after the AI extracts the text, or can we discard it to save storage? *(Defaulting to discard after successful extraction).*
