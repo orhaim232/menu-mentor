@@ -78,12 +78,14 @@
 ### משימה 10: עדכון תכנון הסכמה במסמכים (בוצע)
 1. **מטרה:** עדכון סכמה גנרית תומכת במסעדות שונות (`menu_categories`, `custom_attributes`).
 
-### משימה 11: כתיבת Migration עבור menu_categories והשדות החדשים
+### [x] משימה 11: כתיבת Migration עבור menu_categories והשדות החדשים
+**Completed: Created and successfully applied the generic menu schema migration in Supabase.**
 1. **מטרה:** יצירת קובץ SQL המכיל הוספת `menu_categories` ושדות `custom_attributes`, `service_notes`, `modification_rules`, `category_id` (במקום `category` טקסט) ו-`menu_version`.
 2. **זמן:** 20 דקות.
 3. **אזורים:** `supabase/migrations/` ו-`supabase/schema.sql`.
 
-### משימה 12: הרצת Migration ידנית ב-Supabase
+### [x] משימה 12: הרצת Migration ידנית ב-Supabase
+**Completed: Created and successfully applied the generic menu schema migration in Supabase.**
 1. **מטרה:** הפעלת ה-SQL במסד הנתונים בענן ליצירת הטבלאות.
 
 ### משימה 13: עדכון טיפוסי TypeScript
