@@ -13,6 +13,7 @@ export default function WaiterDashboard() {
   const [dishes, setDishes] = useState<MenuDishLearningCardV2[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"knowledge" | "memory" | "practice">("knowledge");
 
   async function handleGenerateMenuLearningPath() {
     setLoading(true);
@@ -71,42 +72,78 @@ export default function WaiterDashboard() {
             </div>
           </div>
 
-          {/* Generate Button */}
+          {/* Generate Button (Only in Knowledge tab) */}
+          {activeTab === "knowledge" && (
+            <button
+              id="generate-learning-path-btn"
+              onClick={handleGenerateMenuLearningPath}
+              disabled={loading}
+              className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-950 font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
+            >
+              {loading ? (
+                <>
+                  {/* Simple spinner */}
+                  <svg
+                    className="animate-spin h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                  מייצר מסלול למידה...
+                </>
+              ) : (
+                "צור מסלול למידה תפריטי"
+              )}
+            </button>
+          )}
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b border-zinc-200 dark:border-zinc-800">
           <button
-            id="generate-learning-path-btn"
-            onClick={handleGenerateMenuLearningPath}
-            disabled={loading}
-            className="w-full h-12 flex items-center justify-center gap-2 rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-950 font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100"
+            onClick={() => setActiveTab("knowledge")}
+            className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-all text-center ${
+              activeTab === "knowledge"
+                ? "border-zinc-950 dark:border-zinc-50 text-zinc-950 dark:text-zinc-50 font-extrabold"
+                : "border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+            }`}
           >
-            {loading ? (
-              <>
-                {/* Simple spinner */}
-                <svg
-                  className="animate-spin h-5 w-5"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                  />
-                </svg>
-                מייצר מסלול למידה...
-              </>
-            ) : (
-              "צור מסלול למידה תפריטי"
-            )}
+            הכרת המנות
+          </button>
+          <button
+            onClick={() => setActiveTab("memory")}
+            className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-all text-center ${
+              activeTab === "memory"
+                ? "border-zinc-950 dark:border-zinc-50 text-zinc-950 dark:text-zinc-50 font-extrabold"
+                : "border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+            }`}
+          >
+            משחק זיכרון
+          </button>
+          <button
+            onClick={() => setActiveTab("practice")}
+            className={`flex-1 pb-3 text-sm font-bold border-b-2 transition-all text-center ${
+              activeTab === "practice"
+                ? "border-zinc-950 dark:border-zinc-50 text-zinc-950 dark:text-zinc-50 font-extrabold"
+                : "border-transparent text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300"
+            }`}
+          >
+            תרגול מול לקוח
           </button>
         </div>
 
@@ -120,8 +157,8 @@ export default function WaiterDashboard() {
           </div>
         )}
 
-        {/* Dishes Cards */}
-        {dishes.length > 0 && (
+        {/* Tab Content: Knowledge */}
+        {activeTab === "knowledge" && dishes.length > 0 && (
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-zinc-800 dark:text-zinc-200 px-1">
               הכר את המנות
@@ -188,6 +225,28 @@ export default function WaiterDashboard() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+
+        {/* Tab Content: Memory Game Placeholder */}
+        {activeTab === "memory" && (
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200/80 dark:border-zinc-800 p-8 text-center space-y-3">
+            <div className="text-4xl">🧠</div>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">משחק זיכרון</h2>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              בקרוב: תרגול זיהוי מנות, רכיבים ואלרגנים בצורת משחק.
+            </p>
+          </div>
+        )}
+
+        {/* Tab Content: Customer Practice Placeholder */}
+        {activeTab === "practice" && (
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl shadow-sm border border-zinc-200/80 dark:border-zinc-800 p-8 text-center space-y-3">
+            <div className="text-4xl">💬</div>
+            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50">תרגול מול לקוח</h2>
+            <p className="text-sm text-zinc-500 dark:text-zinc-400">
+              בקרוב: סימולציות שיחה עם לקוחות מבוססות AI.
+            </p>
           </div>
         )}
 
