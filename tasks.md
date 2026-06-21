@@ -85,7 +85,7 @@
 3. **אזורים:** `supabase/migrations/` ו-`supabase/schema.sql`.
 
 ### [x] משימה 12: הרצת Migration ידנית ב-Supabase
-**Completed: Created and successfully applied the generic menu schema migration in Supabase.**
+**Completed: Created and successfully applied the generic menu schema migration in Supabase. Verified in remote DB.**
 1. **מטרה:** הפעלת ה-SQL במסד הנתונים בענן ליצירת הטבלאות.
 
 ### [x] משימה 13: עדכון טיפוסי TypeScript
@@ -112,11 +112,12 @@
 2. **זמן:** 20-30 דקות.
 
 ### [x] משימה 18: הרצה ידנית ואימות ב-Supabase
-**Completed: Created and applied manager membership RLS and tightened API table privileges in Supabase.**
+**Completed: RLS installation verified in Supabase. End-to-end testing will be completed after membership is created.**
 1. **מטרה:** הפעלת ה-Migration בענן, וידוא טבלאות ו-Policies.
 2. **זמן:** 20-30 דקות.
 
-### משימה 19: יצירת proxy.ts (עבור Next.js 16)
+### [x] משימה 19: יצירת proxy.ts (עבור Next.js 16)
+**Completed: Created lib/supabase/proxy.ts and root proxy.ts for session refresh.**
 1. **מטרה:** יצירת `proxy.ts` לרענון סשן בסיסי ל-Supabase.
 2. **זמן:** 20-30 דקות.
 
