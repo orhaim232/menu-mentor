@@ -121,11 +121,13 @@
 1. **מטרה:** יצירת `proxy.ts` לרענון סשן בסיסי ל-Supabase.
 2. **זמן:** 20-30 דקות.
 
-### משימה 20: יצירת Auth callback
+### [x] משימה 20: יצירת Auth callback
+**Completed: Created /app/auth/callback/route.ts to handle OAuth and Magic Link code exchange.**
 1. **מטרה:** הגדרת `/app/auth/callback/route.ts` לאימות טוקן ה-Magic Link מול Supabase.
 2. **זמן:** 20-30 דקות.
 
-### משימה 21: יצירת מסך manager/login
+### [x] משימה 21: יצירת מסך manager/login
+**Completed: Created /app/manager/login/page.tsx with signInWithOtp and signup prevention.**
 1. **מטרה:** שימוש ב-`signInWithOtp` עם `shouldCreateUser: false`.
 2. **זמן:** 20-30 דקות.
 
