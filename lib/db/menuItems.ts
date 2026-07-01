@@ -15,6 +15,25 @@ export async function getMenuItemsByRestaurantId(supabase: SupabaseClient, resta
   return data || [];
 }
 
+export async function getMenuItemsWithDetails(supabase: SupabaseClient, restaurantId: string) {
+  const { data, error } = await supabase
+    .from('menu_items')
+    .select(`
+      *,
+      menu_item_ingredients (name),
+      menu_item_allergens (name),
+      menu_item_tags (name)
+    `)
+    .eq('restaurant_id', restaurantId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching menu items with details:', error);
+    return [];
+  }
+  return data || [];
+}
+
 export async function getActiveMenuItemsByRestaurantId(supabase: SupabaseClient, restaurantId: string): Promise<MenuItem[]> {
   const { data, error } = await supabase
     .from('menu_items')
@@ -50,8 +69,7 @@ export async function createMenuItem(
   restaurantId: string, 
   name: string, 
   description?: string, 
-  price?: number,
-  managerNote?: string
+  price?: number
 ): Promise<MenuItem | null> {
   const { data, error } = await supabase
     .from('menu_items')
@@ -59,8 +77,7 @@ export async function createMenuItem(
       restaurant_id: restaurantId,
       name,
       description: description || null,
-      price: price || null,
-      manager_note: managerNote || null
+      price: price || null
     })
     .select()
     .single();
@@ -102,6 +119,33 @@ export async function deleteMenuItem(supabase: SupabaseClient, id: string): Prom
     return false;
   }
   return true;
+}
+
+export async function createMenuItemIngredients(supabase: SupabaseClient, menuItemId: string, ingredients: string[]): Promise<boolean> {
+  if (ingredients.length === 0) return true;
+  const { error } = await supabase.from('menu_item_ingredients').insert(
+    ingredients.map(name => ({ menu_item_id: menuItemId, name }))
+  );
+  if (error) console.error('Error creating ingredients:', error);
+  return !error;
+}
+
+export async function createMenuItemAllergens(supabase: SupabaseClient, menuItemId: string, allergens: string[]): Promise<boolean> {
+  if (allergens.length === 0) return true;
+  const { error } = await supabase.from('menu_item_allergens').insert(
+    allergens.map(name => ({ menu_item_id: menuItemId, name }))
+  );
+  if (error) console.error('Error creating allergens:', error);
+  return !error;
+}
+
+export async function createMenuItemTags(supabase: SupabaseClient, menuItemId: string, tags: string[]): Promise<boolean> {
+  if (tags.length === 0) return true;
+  const { error } = await supabase.from('menu_item_tags').insert(
+    tags.map(name => ({ menu_item_id: menuItemId, name }))
+  );
+  if (error) console.error('Error creating tags:', error);
+  return !error;
 }
 
 // Simple text search for MVP - does not use pgvector or AI
