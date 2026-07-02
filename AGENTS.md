@@ -2,17 +2,28 @@
 
 ## Project Overview
 MenuMentor is an AI-based training platform for waiters and hospitality staff.
-It helps train waiters on:
-* restaurant menu knowledge
-* customer questions
-* allergens and ingredients
-* hospitality tone
-* upselling
-* AI simulation practice
-* fast menu search
+
+### CURRENT MVP
+- manager Magic Link authentication
+- manager add/list/delete dishes
+- structured ingredients, allergens, and tags
+- waiter restaurant-code validation
+- real menu cards from Supabase
+- shared learning-path preferences
+- deterministic knowledge game
+- immediate factual feedback
+- weighted scoring when consulting the menu
+- responsive desktop/mobile learning UI
+
+### IN DEVELOPMENT
+- AI customer simulation
+- final AI conversation feedback
+
+### FUTURE
+- image/PDF menu parsing
+- semantic menu search
 
 ## Technology Stack
-The expected stack is:
 * Next.js App Router
 * TypeScript
 * Vercel AI SDK
@@ -20,53 +31,29 @@ The expected stack is:
 * TailwindCSS
 
 ## Allowed and Forbidden Folders
-For future development, the AI may edit only:
-* /app
-* /components
-* /lib
-* /types
-* /supabase
-
-The AI must not edit:
-* /.github
-* /.husky
-* /public/assets
-* .env files
-* package files unless explicitly approved
+For future development, the AI may edit only: `/app`, `/components`, `/lib`, `/types`, `/supabase`.
+The AI must not edit: `/.github`, `/.husky`, `/public/assets`, `.env` files, `package` files unless explicitly approved.
 
 ## AI Behavior Rules
-* Plan before making changes.
-* Explain which files will be changed before editing.
-* Keep changes focused and minimal.
-* Do not rewrite unrelated files.
-* Do not invent menu data, allergens, prices, or ingredients.
-* When uncertain, ask for clarification.
-* After changes, summarize what changed and how to test it.
+* **Skill Reading:** Read the relevant Skill before applicable work.
+* **Context Scope:** Perform task-relevant file reads only.
+* **Edit Scope:** Maintain focused edit scope. Do not rewrite unrelated files.
+* **Factual Accuracy:** No invented menu/allergen facts.
+* **Model Choice:** Use stronger models for audits/risky refactors, and faster models for focused changes.
+* **Communication:** Use Caveman mode output when requested.
+* **Honesty:** No false claims that unused Skills were used. No AI-generated personal reflections.
+* **Planning:** Plan before making changes. Explaining files to be changed.
 
 ## Coding Behavior Rules
-* Use TypeScript.
-* Prefer small, reusable components.
+* Use TypeScript. Prefer small, reusable components.
 * Keep UI, AI logic, database logic, and types separated.
-* Use TailwindCSS for styling.
-* Add short comments only for non-obvious logic, AI prompts, authentication, database queries, security-related logic, or complex state management.
-* Do not add comments for obvious UI markup or simple variable assignments.
+* Use TailwindCSS for styling. Add short comments only for non-obvious logic.
 
 ## Security Rules
 * Do not expose JWT tokens.
-* Do not include personal user information in LLM prompts.
-* Do not log sensitive data.
-* Use role-based access: manager and waiter.
-* Managers can upload menus; waiters cannot.
-* Treat allergens carefully and avoid unsupported certainty if menu data is missing.
-
-## Context Reduction Rules
-* Read only the files needed for the current task.
-* Prefer targeted file reads over scanning the entire project.
-* Use existing spec, tasks, rules, and relevant skills instead of re-deriving context every time.
-* Keep responses concise unless detailed explanation is requested.
+* Do not include personal user info in LLM prompts.
+* Use role-based access: manager vs waiter.
 
 ## Course Documentation Rules
-* Preserve documentation useful for the AI-driven development course.
-* Keep track of rules, skills, AI improvements, context-reduction actions, and reflection items.
-* Do not mix academic submission documents with production UI unless explicitly requested.
-
+* Preserve documentation useful for the AI course.
+* Keep track of rules, skills, AI improvements, context reduction actions.
