@@ -35,6 +35,7 @@ export const MenuDishLearningCardV2Schema = z.object({
   familiarAssociation: z.string().describe("Familiar association or context in Hebrew"),
   recognitionHint: z.string().describe("How to recognize the dish (by name, image, or main ingredient) in Hebrew"),
   relatedMenuItemIds: z.array(z.string()).optional().describe("Optional IDs of related menu items"),
+  tags: z.array(z.string()).optional().describe("Optional tags or dietary details in Hebrew"),
 });
 
 // Stage 2: Compare similar dishes

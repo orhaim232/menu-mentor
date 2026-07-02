@@ -167,3 +167,23 @@ export async function searchMenuItemsBasic(supabase: SupabaseClient, restaurantI
   }
   return data || [];
 }
+
+export async function getActiveMenuItemsWithDetails(supabase: SupabaseClient, restaurantId: string) {
+  const { data, error } = await supabase
+    .from('menu_items')
+    .select(`
+      *,
+      menu_item_ingredients (name),
+      menu_item_allergens (name),
+      menu_item_tags (name)
+    `)
+    .eq('restaurant_id', restaurantId)
+    .eq('is_active', true)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching active menu items with details:', error);
+    return [];
+  }
+  return data || [];
+}

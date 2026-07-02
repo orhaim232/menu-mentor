@@ -1,13 +1,9 @@
-import { redirect } from "next/navigation";
+"use server";
+
 import { createClient } from "@/lib/supabase/server";
 import { getRestaurantByCode } from "@/lib/db/restaurants";
 import { getActiveMenuItemsWithDetails } from "@/lib/db/menuItems";
-import { WaiterDashboardClient } from "./WaiterDashboardClient";
 import type { MenuDishLearningCardV2 } from "@/types/learningPath";
-
-interface PageProps {
-  params: Promise<{ code: string }>;
-}
 
 interface DBDish {
   id: string;
@@ -20,20 +16,23 @@ interface DBDish {
   menu_item_tags: { name: string }[];
 }
 
-export default async function WaiterDashboard({ params }: PageProps) {
-  const { code } = await params;
+export async function getWaiterMenuAction(code: string): Promise<
+  { success: true; dishes: MenuDishLearningCardV2[] } | { success: false; error: string }
+> {
   const trimmedCode = code.trim();
   const supabase = await createClient();
 
   // 1. Resolve restaurant by access_code
   const restaurant = await getRestaurantByCode(supabase, trimmedCode);
   if (!restaurant) {
-    redirect("/?error=invalid-code");
+    return { success: false, error: "קוד מסעדה לא תקין או פג תוקף" };
   }
 
-  // 2. Fetch active dishes and relations
+  // 2. Fetch active dishes
   const dishes = (await getActiveMenuItemsWithDetails(supabase, restaurant.id)) as unknown as DBDish[];
-  const initialDishes: MenuDishLearningCardV2[] = dishes.map((dish) => ({
+
+  // 3. Map to MenuDishLearningCardV2 shape + include tags
+  const mappedDishes: MenuDishLearningCardV2[] = dishes.map((dish) => ({
     id: dish.id,
     name: dish.name,
     imageUrl: dish.image_url || undefined,
@@ -48,7 +47,19 @@ export default async function WaiterDashboard({ params }: PageProps) {
     relatedMenuItemIds: []
   }));
 
-  return (
-    <WaiterDashboardClient code={trimmedCode} restaurantName={restaurant.name} initialDishes={initialDishes} />
-  );
+  return { success: true, dishes: mappedDishes };
+}
+
+export async function checkAccessCodeAction(code: string): Promise<
+  { success: true } | { success: false; error: string }
+> {
+  const trimmedCode = code.trim();
+  const supabase = await createClient();
+
+  const restaurant = await getRestaurantByCode(supabase, trimmedCode);
+  if (!restaurant) {
+    return { success: false, error: "קוד מסעדה לא תקין או פג תוקף" };
+  }
+
+  return { success: true };
 }

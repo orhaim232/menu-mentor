@@ -1,13 +1,45 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { checkAccessCodeAction } from "@/app/waiter/actions";
 
 export default function Home() {
   const [restaurantCode, setRestaurantCode] = useState("DEMO123");
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("error") === "invalid-code") {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setError("קוד מסעדה לא תקין, אנא נסה שנית");
+      }
+    }
+  }, []);
 
   // Clean code to avoid space issues in URL
   const cleanCode = restaurantCode.trim() || "DEMO123";
+
+  const handleWaiterLogin = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await checkAccessCodeAction(cleanCode);
+      if (res.success) {
+        router.push(`/waiter/${cleanCode}/dashboard`);
+      } else {
+        setError(res.error || "קוד מסעדה לא תקין");
+      }
+    } catch {
+      setError("אירעה שגיאה בחיבור למערכת");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-4 bg-zinc-50 dark:bg-zinc-950">
@@ -36,20 +68,31 @@ export default function Home() {
               id="restaurant-code"
               type="text"
               value={restaurantCode}
-              onChange={(e) => setRestaurantCode(e.target.value)}
+              onChange={(e) => {
+                setRestaurantCode(e.target.value);
+                setError(null);
+              }}
               placeholder="הכנס קוד מסעדה..."
               className="w-full px-4 py-3 text-center text-lg font-mono tracking-wider rounded-xl border border-zinc-300 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800 text-zinc-950 dark:text-zinc-50 focus:outline-none focus:ring-2 focus:ring-zinc-950 dark:focus:ring-zinc-300 focus:border-transparent transition-all"
             />
           </div>
 
+          {/* Error Message */}
+          {error && (
+            <div className="bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-400 p-3.5 rounded-xl text-sm border border-rose-100 dark:border-rose-900/30 text-center font-medium">
+              {error}
+            </div>
+          )}
+
           {/* Role Navigation Buttons */}
           <div className="flex flex-col gap-3 pt-2">
-            <Link
-              href={`/waiter/${cleanCode}/dashboard`}
-              className="flex h-12 w-full items-center justify-center rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-950 font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all"
+            <button
+              onClick={handleWaiterLogin}
+              disabled={loading}
+              className="flex h-12 w-full items-center justify-center rounded-xl bg-zinc-950 hover:bg-zinc-800 dark:bg-zinc-50 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-950 font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              כניסה כמלצר
-            </Link>
+              {loading ? "בודק קוד..." : "כניסה כמלצר"}
+            </button>
 
             <Link
               href="/manager/setup"

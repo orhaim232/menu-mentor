@@ -29,9 +29,18 @@ export async function getRestaurantById(supabase: SupabaseClient, id: string): P
   return data;
 }
 
-// For MVP, the restaurant 'code' is just the UUID 'id'
 export async function getRestaurantByCode(supabase: SupabaseClient, code: string): Promise<Restaurant | null> {
-  return getRestaurantById(supabase, code);
+  const { data, error } = await supabase
+    .from('restaurants')
+    .select('*')
+    .eq('access_code', code)
+    .single();
+
+  if (error) {
+    console.error('Error fetching restaurant by access code:', error);
+    return null;
+  }
+  return data;
 }
 
 export async function updateRestaurantBasicInfo(supabase: SupabaseClient, id: string, name: string): Promise<Restaurant | null> {
